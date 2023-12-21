@@ -1,0 +1,21 @@
+name: Deploy to Netlify
+
+on:
+  push:
+    branches: [main]  # Trigger deployment on pushes to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build
+        run: |  # Replace with your build command if needed
+          npm install  # Example for a Node.js project
+          npm run build
+      - name: Deploy
+        uses: netlify/actions/cli@master
+        with:
+          publish-dir: ./build  # Path to your built files
+          production-branch: main  # Branch to deploy
+          token: ${{ secrets.NETLIFY_AUTH_TOKEN }}  # Securely store your Netlify token
